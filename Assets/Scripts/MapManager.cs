@@ -12,6 +12,7 @@ public class MapManager : MonoBehaviour
     public string diffName;
     public int noteDelay;
     public int velocity;
+    public float volume;
     public bool autoplay;
 
     public static MapManager instance;
