@@ -9,4 +9,10 @@ public class SliderTextHandler : MonoBehaviour
     {
         transform.GetComponent<TMPro.TextMeshProUGUI>().text = value.ToString();
     }
+
+    public void onVolumeSliderChange(float value)
+    {
+        transform.GetComponent<TMPro.TextMeshProUGUI>().text = (value * 100).ToString("0") + "%";
+        GameObject.Find("OculusInteractionSampleRig/OVRCameraRig").GetComponent<AudioSource>().volume = value;
+    }
 }
