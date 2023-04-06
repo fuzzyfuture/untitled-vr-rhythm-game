@@ -42,6 +42,7 @@ public class LevelSelectUI : MonoBehaviour
 
         SetSliderValue("DelaySlider", mapManager.noteDelay);
         SetSliderValue("VelocitySlider", mapManager.velocity);
+        SetSliderValue("VolumeSlider", mapManager.volume);
 
         Transform mapButtonParent = transform.Find("Panel/Scroll View/Viewport/Content");
 
@@ -188,12 +189,12 @@ public class LevelSelectUI : MonoBehaviour
         return text.Substring(nameStart, nameEnd -  nameStart);
     }
 
-    private int GetSliderValue(string name)
+    private float GetSliderValue(string name)
     {
-        return (int) GameObject.Find("UIOptions/Panel/" + name).GetComponent<Slider>().value;
+        return GameObject.Find("UIOptions/Panel/" + name).GetComponent<Slider>().value;
     }
 
-    private void SetSliderValue(string name, int value)
+    private void SetSliderValue(string name, float value)
     {
         GameObject.Find("UIOptions/Panel/" + name).GetComponent<Slider>().value = value;
     }
@@ -210,8 +211,9 @@ public class LevelSelectUI : MonoBehaviour
         mapManager.banner = map.banner;
         mapManager.metadata = map.metadata;
         mapManager.diffName = diffName;
-        mapManager.velocity = GetSliderValue("VelocitySlider");
-        mapManager.noteDelay = GetSliderValue("DelaySlider");
+        mapManager.velocity = (int) GetSliderValue("VelocitySlider");
+        mapManager.noteDelay = (int) GetSliderValue("DelaySlider");
+        mapManager.volume = GetSliderValue("VolumeSlider");
         mapManager.autoplay = GetToggleValue("AutoplayToggle");
 
         SceneManager.LoadScene("Main");
