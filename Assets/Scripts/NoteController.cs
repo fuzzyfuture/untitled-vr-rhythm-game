@@ -15,6 +15,7 @@ public class NoteController : MonoBehaviour
     public float hitLeniencyMs;
     public float hitForwardOffsetMs;
     public bool debugColors;
+    public bool autoplay;
 
     private AudioSource source;
     private GameplayUI gameplayUI;
@@ -22,7 +23,6 @@ public class NoteController : MonoBehaviour
     private TextAsset map;
     private float velocity;
     private float noteDelayMs;
-    private bool autoplay;
 
     private struct Note
     {
@@ -59,6 +59,7 @@ public class NoteController : MonoBehaviour
         map = mapManager.diff;
         velocity = mapManager.velocity;
         noteDelayMs = mapManager.noteDelay;
+        source.volume = mapManager.volume;
         autoplay = mapManager.autoplay;
 
         List<Note> notes = new List<Note>();
