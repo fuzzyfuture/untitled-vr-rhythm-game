@@ -12,8 +12,7 @@ public class Drum : MonoBehaviour
     private Transform noteCol;
     private GameplayUI GameplayUI;
     private NoteController noteController;
-    private float leniency;
-    private float forwardOffset;
+    private MapManager mapManager;
 
     public void HitEnter()
     {
@@ -52,7 +51,9 @@ public class Drum : MonoBehaviour
             { "Drum3", KeyCode.K },
         };
 
+        mapManager = GameObject.Find("MapManager").GetComponent<MapManager>();
         source = GetComponent<AudioSource>();
+        source.volume = mapManager.volume;
         noteController = GameObject.Find("NoteController").GetComponent<NoteController>();
         noteCol = GameObject.Find("/NoteController/" + name + "Col").transform;
         GameplayUI = GameObject.Find("UI").GetComponent<GameplayUI>();
@@ -63,12 +64,12 @@ public class Drum : MonoBehaviour
         // Keyboard input for timing debug
         KeyCode key = drumObjectToKeyCode[name];
 
-        if (Input.GetKeyDown(key))
+        if (Input.GetKeyDown(key) && !noteController.autoplay)
         {
             HitEnter();
         }
 
-        if (Input.GetKeyUp(key))
+        if (Input.GetKeyUp(key) && !noteController.autoplay)
         {
             HitExit();
         }
@@ -76,7 +77,7 @@ public class Drum : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Drumstick"))
+        if (collision.gameObject.CompareTag("Drumstick") && !noteController.autoplay)
         {
             HitEnter();
         }
@@ -84,6 +85,9 @@ public class Drum : MonoBehaviour
 
     private void OnCollisionExit(Collision collision)
     {
-        HitExit();
+        if (!noteController.autoplay)
+        {
+            HitExit();
+        }
     }
 }
